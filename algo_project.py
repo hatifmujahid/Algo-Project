@@ -51,7 +51,7 @@ def draw(draw_info, algo_name, ascending):
 	# display it on the screen
 	draw_info.window.blit(controls, (draw_info.width/2 - controls.get_width()/2, 55))
 	# sorting wala part display
-	sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | S - Selection Sort", 1, draw_info.BLUE)
+	sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | S - Selection Sort | H - Heap Sort", 1, draw_info.BLUE)
 	# display it on the screen
 	draw_info.window.blit(sorting, (draw_info.width/2 - sorting.get_width()/2, 85))
 	
@@ -113,7 +113,7 @@ def selection_sort(draw_info, ascending=True):
 		min_idx = step
 
 		for i in range(step+1, len(lst)):
-			if lst[i] < lst[min_idx]:
+			if (lst[i] < lst[min_idx] and ascending) or (lst[i] > lst[min_idx] and not ascending):
 				min_idx = i
 			
 		lst[step], lst[min_idx] = lst[min_idx], lst[step]
@@ -142,6 +142,58 @@ def insertion_sort(draw_info, ascending=True):
 			yield True
 
 	return lst
+def buildMaxHeap(draw_info, ascending, lst):
+    n = len(lst)
+    for i in range(n):
+         
+        # if child is bigger than parent
+        if lst[i] > lst[int((i - 1) / 2)]:
+            j = i
+     
+            # swap child and parent until
+            # parent is smaller
+            while lst[j] > lst[int((j - 1) / 2)]:
+                (lst[j],lst[int((j - 1) / 2)]) = (lst[int((j - 1) / 2)],lst[j])
+                draw_list(draw_info, {int((j - 1) / 2): draw_info.GREEN, j:draw_info.RED})
+                yield True
+                j = int((j - 1) / 2)
+ 
+def heapSort(draw_info, ascending=True):
+    lst = draw_info.lst
+    n = len(lst)
+    buildMaxHeap(draw_info, ascending, lst)
+ 
+    for i in range(n - 1, 0, -1):
+         
+        # swap value of first indexed
+        # with last indexed
+        lst[0], lst[i] = lst[i], lst[0]
+        draw_list(draw_info, {0:draw_info.GREEN, i:draw_info.RED})
+        yield True
+        # maintaining heap property
+        # after each swapping
+        j, index = 0, 0
+         
+        while True:
+            index = 2 * j + 1
+             
+            # if left child is smaller than
+            # right child point index variable
+            # to right child
+            if (index < (i - 1) and
+                lst[index] < lst[index + 1]):
+                index += 1
+         
+            # if parent is smaller than child
+            # then swapping parent with child
+            # having higher value
+            if index < i and lst[j] < lst[index]:
+                lst[j], lst[index] = lst[index], lst[j]
+                draw_list(draw_info, {index: draw_info.GREEN, j: draw_info.RED})
+         
+            j = index
+            if index >= i:
+                break
 
 def main():
 	run = True
@@ -191,6 +243,9 @@ def main():
 			elif event.key == pygame.K_i and not sorting:
 				sorting_algorithm = insertion_sort
 				sorting_algorithm_name = "Insertion Sort"
+			elif event.key == pygame.K_h and not sorting:
+				sorting_algorithm = heapSort
+				sorting_algorithm_name = "Heap Sort"
 			
 	pygame.quit()
 if __name__ == "__main__":
