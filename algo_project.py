@@ -178,6 +178,23 @@ def heapSort(draw_info, ascending=True):
 		yield True
 		# Heapify root element
 		heapify(draw_info,arr, i, 0)
+# main function to do heap sort
+def heapSort_descending(draw_info, ascending=True):
+     
+    # Build heap (rearrange array)
+    for i in range(int(n / 2) - 1, -1, -1):
+        heapify(draw_info,arr, n, i)
+ 
+    # One by one extract an element
+    # from heap
+    for i in range(n-1, -1, -1):
+         
+        # Move current root to end #
+        arr[0], arr[i] = arr[i], arr[0]
+        draw_list(draw_info,{i:draw_info.GREEN, 0:draw_info.RED}, True)
+        yield True
+        heapify(draw_info,arr, i, 0)
+
 
 def main():
 	run = True
@@ -228,8 +245,11 @@ def main():
 				sorting_algorithm = insertion_sort
 				sorting_algorithm_name = "Insertion Sort"
 			elif event.key == pygame.K_h and not sorting:
-				sorting_algorithm = heapSort
 				sorting_algorithm_name = "Heap Sort"
+				if (ascending==False):
+					heapSort_descending(draw_info, ascending)
+				else:
+					heapSort(draw_info, ascending)
 			
 	pygame.quit()
 if __name__ == "__main__":
