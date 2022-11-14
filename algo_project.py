@@ -142,58 +142,42 @@ def insertion_sort(draw_info, ascending=True):
 			yield True
 
 	return lst
-def buildMaxHeap(draw_info, ascending, lst):
-    n = len(lst)
-    for i in range(n):
-         
-        # if child is bigger than parent
-        if lst[i] > lst[int((i - 1) / 2)]:
-            j = i
-     
-            # swap child and parent until
-            # parent is smaller
-            while lst[j] > lst[int((j - 1) / 2)]:
-                (lst[j],lst[int((j - 1) / 2)]) = (lst[int((j - 1) / 2)],lst[j])
-                draw_list(draw_info, {int((j - 1) / 2): draw_info.GREEN, j:draw_info.RED})
-                yield True
-                j = int((j - 1) / 2)
  
+def heapify(draw_info, arr,n, i):
+	# Find largest among root and children
+	largest = i
+	l = 2 * i + 1
+	r = 2 * i + 2
+
+	if l < n and arr[i] < arr[l]:
+		largest = l
+
+	if r < n and arr[largest] < arr[r]:
+		largest = r
+
+	# If root is not largest, swap with largest and continue heapifying
+	if largest != i:
+		arr[i], arr[largest] = arr[largest], arr[i]
+		draw_list(draw_info,{i:draw_info.GREEN, largest:draw_info.RED}, True)
+		heapify(draw_info,arr, n, largest)
+
+  
 def heapSort(draw_info, ascending=True):
-    lst = draw_info.lst
-    n = len(lst)
-    buildMaxHeap(draw_info, ascending, lst)
- 
-    for i in range(n - 1, 0, -1):
-         
-        # swap value of first indexed
-        # with last indexed
-        lst[0], lst[i] = lst[i], lst[0]
-        draw_list(draw_info, {0:draw_info.GREEN, i:draw_info.RED})
-        yield True
-        # maintaining heap property
-        # after each swapping
-        j, index = 0, 0
-         
-        while True:
-            index = 2 * j + 1
-             
-            # if left child is smaller than
-            # right child point index variable
-            # to right child
-            if (index < (i - 1) and
-                lst[index] < lst[index + 1]):
-                index += 1
-         
-            # if parent is smaller than child
-            # then swapping parent with child
-            # having higher value
-            if index < i and lst[j] < lst[index]:
-                lst[j], lst[index] = lst[index], lst[j]
-                draw_list(draw_info, {index: draw_info.GREEN, j: draw_info.RED})
-         
-            j = index
-            if index >= i:
-                break
+	arr = draw_info.lst
+	n = len(arr)
+
+	# Build max heap
+	for i in range(n//2, -1, -1):
+		heapify(draw_info,arr, n, i)
+
+	for i in range(n-1, 0, -1):
+		# Swap
+		arr[i], arr[0] = arr[0], arr[i]
+
+		draw_list(draw_info,{i:draw_info.GREEN, 0:draw_info.RED}, True)
+		yield True
+		# Heapify root element
+		heapify(draw_info,arr, i, 0)
 
 def main():
 	run = True
