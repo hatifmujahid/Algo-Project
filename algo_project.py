@@ -1,14 +1,17 @@
 import pygame
 import random
 import math
-pygame.init()
+import matplotlib.pyplot as plt 
+import numpy as np
+import time
 
+pygame.init()
 class DrawInformation:
 	BLACK = 0, 0, 0
 	WHITE = 255, 255, 255
 	GREEN = 0, 255, 0
 	RED = 255, 0, 0
-	BACKGROUND_COLOR = WHITE
+	BACKGROUND_COLOR = BLACK
 	BLUE = 0, 0, 255
 	GRADIENTS = [
 		(128, 128, 128),
@@ -17,7 +20,7 @@ class DrawInformation:
 	]
 
 	FONT = pygame.font.SysFont('Times New Roman', 30)
-	LARGE_FONT = pygame.font.SysFont('comicsans', 40)
+	LARGE_FONT = pygame.font.SysFont('Times New Roman', 40)
 
 	SIDE_PAD = 100
 	TOP_PAD = 150
@@ -43,7 +46,7 @@ class DrawInformation:
 def draw(draw_info, algo_name, ascending):
 	#window is filled with whwite color 
 	draw_info.window.fill(draw_info.BACKGROUND_COLOR)
-	title = draw_info.LARGE_FONT.render(f"{algo_name} - {'Ascending' if ascending else 'Descending'}", 1, draw_info.BLACK)
+	title = draw_info.LARGE_FONT.render(f"{algo_name} - {'Ascending' if ascending else 'Descending'}", 1, draw_info.GREEN)
 	draw_info.window.blit(title, (draw_info.width/2 - title.get_width()/2, 1))
 
 	# font rendered
@@ -195,63 +198,180 @@ def heapSort_descending(draw_info, ascending=True):
         yield True
         heapify(draw_info,arr, i, 0)
 
+def merge(bar, left, mid, right, win):
+    temp = []
+    i = left
+    j = mid + 1
+
+    while i <= mid and j <= right:
+        bar[i].check()
+        bar[j].check()
+        draw(win, bar)
+        bar[i].back()
+        bar[j].back()
+        if bar[i].value < bar[j].value:
+            temp.append(bar[i])
+            i += 1
+        else:
+            temp.append(bar[j])
+            j += 1
+    while i <= mid:
+        bar[i].check()
+        draw(win, bar)
+        bar[i].back()
+        temp.append(bar[i])
+        i += 1
+    while j <= right:
+        bar[j].check()
+        draw(win, bar)
+        bar[j].back()
+        temp.append(bar[j])
+        j += 1
+    k = 0
+    for i in range(left, right + 1):
+        bar[i] = temp[k]
+        bar[i].reset(i)
+        bar[i].check()
+        draw(win, bar)
+        if right - left == len(bar) - 1:
+            bar[i].done()
+        else:
+            bar[i].back()
+        k += 1
+
+
+def merge_sort(bar, left, right, win):
+    # Set global variables to control
+    # the quitting function and shuffle function for the list
+    # before running
+    global SORTED
+    SORTED = True
+    global RUN
+
+    mid = left + (right - left) // 2
+    if left < right:
+        merge_sort(bar, left, mid, win)
+        merge_sort(bar, mid + 1, right, win)
+        if not RUN:
+            return
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                RUN = False
+                break
+        merge(bar, left, mid, right, win)
+
+# non comparison based sorting wala part
+def countingSort(array, place):
+    size = len(array)
+    output = [0] * size
+    count = [0] * 10
+
+    # Calculate count of elements
+    for i in range(0, size):
+        index = array[i] // place
+        count[index % 10] += 1
+
+    # Calculate cumulative count
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+
+    # Place the elements in sorted order
+    i = size - 1
+    while i >= 0:
+        index = array[i] // place
+        output[count[index % 10] - 1] = array[i]
+        count[index % 10] -= 1
+        i -= 1
+
+    for i in range(0, size):
+        array[i] = output[i]
+
+
+# Main function to implement radix sort
+def radixSort(array):
+    start = time.time()
+    # Get maximum element
+    max_element = max(array)
+
+    # Apply counting sort to sort elements based on place value.
+    place = 1
+    while max_element // place > 0:
+        countingSort(array, place)
+        place *= 10
+    end = time.time()
+    return end-start
 
 def main():
-	run = True
-	clock = pygame.time.Clock()
-	n=50
-	min_val = 0
-	max_val = 100
-	sorting = False
-	ascending = True
-	sorting_algorithm = bubble_sort
-	sorting_algorithm_name = "Bubble Sort"
-	sorting_algorithm_generator = None
-	lst = generating_starting_list(n, min_val, max_val)
-	draw_info = DrawInformation(1200, 800, lst)
-	while run: 
-		# fps
-		clock.tick(60)
-		if sorting:
-			try:
-				next(sorting_algorithm_generator)
-			except StopIteration:
-				sorting = False
-		else: 
-			draw(draw_info, sorting_algorithm_name, ascending)
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				run = False
-			if event.type != pygame.KEYDOWN: # pressing key down 
-				continue
-			if event.key == pygame.K_r: #pressing key R
-				lst = generating_starting_list(n, min_val, max_val)
-				draw_info.set_list(lst)
-				sorting = False
-			elif event.key == pygame.K_SPACE and sorting==False:
-				sorting= True
-				sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
-			elif event.key == pygame.K_a and not sorting:
-				ascending = True
-			elif event.key == pygame.K_d and not sorting:
-				ascending = False
-			elif event.key == pygame.K_s and not sorting:
-				sorting_algorithm = selection_sort
-				sorting_algorithm_name = "Selection Sort"
-			elif event.key == pygame.K_b and not sorting:
-				sorting_algorithm = bubble_sort
-				sorting_algorithm_name = "Bubble Sort"
-			elif event.key == pygame.K_i and not sorting:
-				sorting_algorithm = insertion_sort
-				sorting_algorithm_name = "Insertion Sort"
-			elif event.key == pygame.K_h and not sorting:
-				sorting_algorithm_name = "Heap Sort"
-				if (ascending==False):
-					heapSort_descending(draw_info, ascending)
-				else:
-					heapSort(draw_info, ascending)
-			
-	pygame.quit()
+	print("Do you want to see comparison or non-comparison based sort? \n 1. Comparision sorts \n2. Non Comparision sort")
+	choice = int(input())
+	timearr = []
+	array = [121,432,564,23,1,45,788]
+	if choice ==1:	
+		run = True
+		clock = pygame.time.Clock()
+		n=50
+		min_val = 0
+		max_val = 100
+		sorting = False
+		ascending = True
+		sorting_algorithm = bubble_sort
+		sorting_algorithm_name = "Bubble Sort"
+		sorting_algorithm_generator = None
+		lst = generating_starting_list(n, min_val, max_val)
+		draw_info = DrawInformation(1000, 600, lst)
+		while run: 
+			# fps
+			clock.tick(60)
+			if sorting:
+				try:
+					next(sorting_algorithm_generator)
+				except StopIteration:
+					sorting = False
+			else: 
+				draw(draw_info, sorting_algorithm_name, ascending)
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					run = False
+				if event.type != pygame.KEYDOWN: # pressing key down 
+					continue
+				if event.key == pygame.K_r: #pressing key R
+					lst = generating_starting_list(n, min_val, max_val)
+					draw_info.set_list(lst)
+					sorting = False
+				elif event.key == pygame.K_SPACE and sorting==False:
+					sorting= True
+					sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
+				elif event.key == pygame.K_a and not sorting:
+					ascending = True
+				elif event.key == pygame.K_d and not sorting:
+					ascending = False
+				elif event.key == pygame.K_s and not sorting:
+					sorting_algorithm = selection_sort
+					sorting_algorithm_name = "Selection Sort"
+				elif event.key == pygame.K_b and not sorting:
+					sorting_algorithm = bubble_sort
+					sorting_algorithm_name = "Bubble Sort"
+				elif event.key == pygame.K_i and not sorting:
+					sorting_algorithm = insertion_sort
+					sorting_algorithm_name = "Insertion Sort"
+				elif event.key == pygame.K_h and not sorting:
+					sorting_algorithm_name = "Heap Sort"
+					if (ascending==False):
+						heapSort_descending(draw_info, ascending)
+					else:
+						heapSort(draw_info, ascending)
+					
+				
+				
+		pygame.quit()
+	else:
+		print("Which sort? \n r. Radix Sort \n c. Counting Sort \n ")
+		choice = input()
+		timearr.append(radixSort(array))	
+		fig, ax = plt.subplots(figsize = (10,7))
+		ax.hist(timearr, bins = [0,25,50,75,100])
+		plt.show()
+
 if __name__ == "__main__":
 	main()
 
