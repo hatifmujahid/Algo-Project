@@ -4,6 +4,7 @@ import math
 import matplotlib.pyplot as plt 
 import numpy as np
 import time
+from noncomparision import *
 pygame.init()
 class DrawInformation:
     BLACK = 0, 0, 0
@@ -423,10 +424,7 @@ def radixSort(array):
 def main():
     print("Do you want to see comparison or non-comparison based sort? \n 1. Comparision sorts \n2. Non Comparision sort")
     choice = int(input())
-    timearr = []
-    array = [121,432,564,23,1,45,788]
-    array1 = [121,432,564,23,1,45,788]
-    array2 = [121,432,564,23,1,45,788]
+  
     if choice ==1:	
         run = True
         clock = pygame.time.Clock()
@@ -488,17 +486,9 @@ def main():
                 
         pygame.quit()
     else:
-        time1 = count_sort(array1)	
-        time2 = radixSort(array)
-        # timearr.append(bucketSort(array2))
-        data = {'Counting Sort':time1, 'Radix Sort':time2}
-        sorting_algos = list(data.keys())
-        values = list(data.values())
-
-        fig = plt.figure(figsize =(10,5))
-
-        plt.bar(sorting_algos, values, color = 'maroon', width = 0.4)
-        plt.show()
+        main_code()
+        
+        
 if __name__ == "__main__":
     main()
 
