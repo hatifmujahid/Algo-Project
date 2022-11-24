@@ -422,7 +422,16 @@ def radixSort(array):
 
 
 def main():
-    print("Do you want to see comparison or non-comparison based sort? \n 1. Comparision sorts \n2. Non Comparision sort")
+    
+    read = open("input.txt", "r")
+    score_list = read.read().split(',');
+    float_list = []
+    int_list = []
+    for i in range(len(score_list)):
+        float_list.append(float(score_list[i][1:]))
+    for i in range(len(score_list)):
+        int_list.append(int(score_list[i][1:]))
+    print("Do you want to see comparison or non-comparison based sort? \n1. Comparision sorts \n2. Non Comparision sort")
     choice = int(input())
   
     if choice ==1:	
@@ -486,7 +495,7 @@ def main():
                 
         pygame.quit()
     else:
-        main_code()
+        main_code(float_list, int_list)
         
         
 if __name__ == "__main__":
