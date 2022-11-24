@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 from noncomparision import *
+from ui_file import *
 pygame.init()
 class DrawInformation:
     BLACK = 0, 0, 0
@@ -423,7 +424,7 @@ def radixSort(array):
 
 def main():
     
-    read = open("input.txt", "r")
+    read = open(ui_main(), "r")
     score_list = read.read().split(',');
     float_list = []
     int_list = []
