@@ -1,4 +1,6 @@
+import time
 def book_824(arr, n,m):
+    start = time.time()
     max_element = int(max(arr))
     min_element = int(min(arr))
     range_of_elements = max_element - min_element + 1
@@ -19,4 +21,5 @@ def book_824(arr, n,m):
     for i in range(0, len(arr)):
         arr[i] = output_arr[i]
     print('number of elements between range n and m: ', (count_arr[m]-count_arr[n]))
-
+    end = time.time()
+    return end-start

@@ -10,10 +10,10 @@ pygame.init()
 class DrawInformation:
     BLACK = 0, 0, 0
     WHITE = 255, 255, 255
-    GREEN = 0, 255, 0
-    RED = 255, 0, 0
+    GREEN = 246, 169, 97
+    RED = 132, 54, 96
     BACKGROUND_COLOR = BLACK
-    BLUE = 0, 0, 255
+    BLUE = 88, 49, 104
     GRADIENTS = [
         (128, 128, 128),
         (160, 160, 160),
@@ -422,81 +422,69 @@ def radixSort(array):
     return end-start
 
 
-def main():
-    
-    read = open(ui_main(), "r")
-    score_list = read.read().split(',');
-    float_list = []
-    int_list = []
-    for i in range(len(score_list)):
-        float_list.append(float(score_list[i][1:]))
-    for i in range(len(score_list)):
-        int_list.append(int(score_list[i][1:]))
-    print("Do you want to see comparison or non-comparison based sort? \n1. Comparision sorts \n2. Non Comparision sort")
-    choice = int(input())
-  
-    if choice ==1:	
-        run = True
-        clock = pygame.time.Clock()
-        n=50
-        min_val = 0
-        max_val = 100
-        sorting = False
-        ascending = True
-        sorting_algorithm = bubble_sort
-        sorting_algorithm_name = "Bubble Sort"
-        sorting_algorithm_generator = None
-        lst = generating_starting_list(n, min_val, max_val)
-        draw_info = DrawInformation(1200, 800, lst)
-        while run: 
-            # fps
-            clock.tick(60)
-            if sorting:
-                try:
-                    next(sorting_algorithm_generator)
-                except StopIteration:
-                    sorting = False
-            else: 
-                draw(draw_info, sorting_algorithm_name, ascending)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                if event.type != pygame.KEYDOWN: # pressing key down 
-                    continue
-                if event.key == pygame.K_r: #pressing key R
-                    lst = generating_starting_list(n, min_val, max_val)
-                    draw_info.set_list(lst)
-                    sorting = False
-                elif event.key == pygame.K_SPACE and sorting==False:
-                    sorting= True
-                    sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
-                elif event.key == pygame.K_a and not sorting:
-                    ascending = True
-                elif event.key == pygame.K_d and not sorting:
-                    ascending = False
-                elif event.key == pygame.K_s and not sorting:
-                    sorting_algorithm = selection_sort
-                    sorting_algorithm_name = "Selection Sort"
-                elif event.key == pygame.K_b and not sorting:
-                    sorting_algorithm = bubble_sort
-                    sorting_algorithm_name = "Bubble Sort"
-                elif event.key == pygame.K_i and not sorting:
-                    sorting_algorithm = insertion_sort
-                    sorting_algorithm_name = "Insertion Sort"
-                elif event.key == pygame.K_h and not sorting:
-                    sorting_algorithm_name = "Heap Sort"
-                    if (ascending==False):
-                        heapSort_descending(draw_info, ascending)
-                    else:
-                        heapSort(draw_info, ascending)
-                elif event.key == pygame.K_q and not sorting:
-                    sorting_algorithm = insertion_sort
-                    sorting_algorithm_name = "Quick Sort"
-                
-                
-        pygame.quit()
-    else:
-        main_code(float_list, int_list)
+def visualize_code(int_list):
+    visualize_array = []
+    for i in range(10):
+        visualize_array.append(int_list[i])
+    run = True
+    clock = pygame.time.Clock()
+    n=10
+    min_val = 0
+    max_val = 100
+    sorting = False
+    ascending = True
+    sorting_algorithm = bubble_sort
+    sorting_algorithm_name = "Bubble Sort"
+    sorting_algorithm_generator = None
+    lst = visualize_array
+    draw_info = DrawInformation(1200, 600, lst)
+    while run: 
+        # fps
+        clock.tick(30)
+        if sorting:
+            try:
+                next(sorting_algorithm_generator)
+            except StopIteration:
+                sorting = False
+        else: 
+            draw(draw_info, sorting_algorithm_name, ascending)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type != pygame.KEYDOWN: # pressing key down 
+                continue
+            if event.key == pygame.K_r: #pressing key R
+                lst = generating_starting_list(n, min_val, max_val)
+                draw_info.set_list(lst)
+                sorting = False
+            elif event.key == pygame.K_SPACE and sorting==False:
+                sorting= True
+                sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
+            elif event.key == pygame.K_a and not sorting:
+                ascending = True
+            elif event.key == pygame.K_d and not sorting:
+                ascending = False
+            elif event.key == pygame.K_s and not sorting:
+                sorting_algorithm = selection_sort
+                sorting_algorithm_name = "Selection Sort"
+            elif event.key == pygame.K_b and not sorting:
+                sorting_algorithm = bubble_sort
+                sorting_algorithm_name = "Bubble Sort"
+            elif event.key == pygame.K_i and not sorting:
+                sorting_algorithm = insertion_sort
+                sorting_algorithm_name = "Insertion Sort"
+            elif event.key == pygame.K_h and not sorting:
+                sorting_algorithm_name = "Heap Sort"
+                if (ascending==False):
+                    heapSort_descending(draw_info, ascending)
+                else:
+                    heapSort(draw_info, ascending)
+            elif event.key == pygame.K_q and not sorting:
+                sorting_algorithm = QuickSort
+                sorting_algorithm_name = "Quick Sort" 
+    pygame.quit()
+
+        
         
         
 if __name__ == "__main__":

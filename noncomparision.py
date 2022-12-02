@@ -1,4 +1,4 @@
-import random
+from random import randint
 import math
 import matplotlib.pyplot as plt 
 import numpy as np
@@ -92,16 +92,160 @@ def radixSort(array):
     end = time.time()
     return (end-start)
 
+def quickSort(array):  # in-place | not-stable
+    start = time.time()
+    if len(array) <= 1:
+        return array
+    smaller, equal, larger = [], [], []
+    pivot = array[randint(0, len(array) - 1)]
+    for x in array:
+        if x < pivot:
+            smaller.append(x)
+        elif x == pivot:
+            equal.append(x)
+        else:
+            larger.append(x)
+    end = time.time()
+    return end-start
+def heapify(arr, N, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+ 
+    # See if left child of root exists and is
+    # greater than root
+    if l < N and arr[largest] < arr[l]:
+        largest = l
+ 
+    # See if right child of root exists and is
+    # greater than root
+    if r < N and arr[largest] < arr[r]:
+        largest = r
+ 
+    # Change root, if needed
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+ 
+        # Heapify the root.
+        heapify(arr, N, largest)
+ 
+# The main function to sort an array of given size
+ 
+ 
+def heapSort(arr):
+    start = time.time()
+    N = len(arr)
+ 
+    # Build a maxheap.
+    for i in range(N//2 - 1, -1, -1):
+        heapify(arr, N, i)
+ 
+    # One by one extract elements
+    for i in range(N-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, i, 0)
+    end = time.time()
+    return end-start
 
+def bubbleSort(arr):
+    start = time.time()
+    n = len(arr)
+ 
+    # Traverse through all array elements
+    for i in range(n):
+ 
+        # Last i elements are already in place
+        for j in range(0, n-i-1):
+ 
+            # traverse the array from 0 to n-i-1
+            # Swap if the element found is greater
+            # than the next element
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    end = time.time()
+    return end-start
+def mergeSort(arr):
+    if len(arr) > 1:
+ 
+         # Finding the mid of the array
+        mid = len(arr)//2
+ 
+        # Dividing the array elements
+        L = arr[:mid]
+ 
+        # into 2 halves
+        R = arr[mid:]
+ 
+        # Sorting the first half
+        mergeSort(L)
+ 
+        # Sorting the second half
+        mergeSort(R)
+ 
+        i = j = k = 0
+ 
+        # Copy data to temp arrays L[] and R[]
+        while i < len(L) and j < len(R):
+            if L[i] <= R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+ 
+        # Checking if any element was left
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+ 
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
 
+def insertionSort(arr):
+ 
+    # Traverse through 1 to len(arr)
+    for i in range(1, len(arr)):
+ 
+        key = arr[i]
+ 
+        # Move elements of arr[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        j = i-1
+        while j >= 0 and key < arr[j] :
+                arr[j + 1] = arr[j]
+                j -= 1
+        arr[j + 1] = key
+
+def selectionSort(arr):
+    for i in range(len(A)):
+        min_idx = i
+        for j in range(i+1, len(A)):
+            if A[min_idx] > A[j]:
+                min_idx = j       
+    A[i], A[min_idx] = A[min_idx], A[i]
+ 
 def main_code(float_list, int_list):
-    
-    book_824(int_list, 5,22-1)
-    book_725(int_list)
+      
     time1 = count_sort(int_list)
+    print("count sort done")
     time2 = radixSort(int_list)
+    print("radix sort done")
+    time3 = quickSort(int_list)
+    print("quick sort done")
+    time4 = heapSort(int_list)
+    print("heap sort done")
+    time6 = mergeSort(int_list)
+    print("merge sort done")
+    time7 = insertionSort(int_list)
+    print("insertion sort done")
+
     if max(int_list)>1 or min(int_list)<0:
-        data = {'Counting Sort':time1, 'Radix Sort':time2, 'Bucket Sort': 0}
+        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4 ,'bubbleSort':time5 , 'mergeSort':time6 , 'insertionSort':time7 ,'Bucket Sort': 0}
         sorting_algos = list(data.keys())
         values = list(data.values())
 
@@ -112,8 +256,8 @@ def main_code(float_list, int_list):
         plt.bar(sorting_algos, values, color = 'black', width = 0.4)
         plt.show()  
     else:
-        time3 = bucketSort(float_list)
-        data = {'Counting Sort':time1, 'Radix Sort':time2, 'Bucket Sort':time3}
+        time8 = bucketSort(float_list)
+        data = {'Counting Sort':time1, 'Radix Sort':time2, 'Bucket Sort':time8}
         sorting_algos = list(data.keys())
         values = list(data.values())
 

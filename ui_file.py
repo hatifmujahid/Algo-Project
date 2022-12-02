@@ -5,7 +5,7 @@ import time
 
 ws = Tk()
 ws.title('Array file input UI')
-ws.geometry('400x400') 
+ws.geometry('600x600') 
 
 
 def open_file():
@@ -20,9 +20,10 @@ def uploadFiles():
         ws, 
         orient=HORIZONTAL, 
         length=300, 
-        mode='determinate'
+        mode='determinate',
+
         )
-    pb1.grid(row=4, columnspan=3, pady=20)
+    pb1.grid(row=4, columnspan=3, pady=20, padx= 20)
     for i in range(5):
         ws.update_idletasks()
         pb1['value'] += 20
