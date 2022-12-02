@@ -30,6 +30,7 @@ def uploadFiles():
         time.sleep(1)
     pb1.destroy()
     Label(ws, text='File Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
+    ws.destroy()
         
     
     

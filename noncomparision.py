@@ -165,6 +165,7 @@ def bubbleSort(arr):
     end = time.time()
     return end-start
 def mergeSort(arr):
+    start = time.time()
     if len(arr) > 1:
  
          # Finding the mid of the array
@@ -204,9 +205,12 @@ def mergeSort(arr):
             arr[k] = R[j]
             j += 1
             k += 1
+    
+    end = time.time()
+    return end -start
 
 def insertionSort(arr):
- 
+    start = time.time()
     # Traverse through 1 to len(arr)
     for i in range(1, len(arr)):
  
@@ -220,7 +224,8 @@ def insertionSort(arr):
                 arr[j + 1] = arr[j]
                 j -= 1
         arr[j + 1] = key
-
+    end = time.time()
+    return end-start
 def selectionSort(arr):
     for i in range(len(A)):
         min_idx = i
@@ -245,7 +250,7 @@ def main_code(float_list, int_list):
     print("insertion sort done")
 
     if max(int_list)>1 or min(int_list)<0:
-        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4 ,'bubbleSort':time5 , 'mergeSort':time6 , 'insertionSort':time7 ,'Bucket Sort': 0}
+        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4,'mergeSort':time6 , 'insertionSort':time7 ,'Bucket Sort': 0}
         sorting_algos = list(data.keys())
         values = list(data.values())
 
@@ -253,7 +258,7 @@ def main_code(float_list, int_list):
         ax.set_ylabel('Time in seconds')
         ax.set_xlabel('Sorting algo names')
         ax.set_title('Graph of time (Bucket sort is not possible with this array)')
-        plt.bar(sorting_algos, values, color = 'black', width = 0.4)
+        plt.bar(sorting_algos, values, color = 'blue', width = 0.4)
         plt.show()  
     else:
         time8 = bucketSort(float_list)
@@ -267,3 +272,4 @@ def main_code(float_list, int_list):
         ax.set_title('Graph of time')
         plt.bar(sorting_algos, values, color = 'blue', width = 0.4)
         plt.show()
+    

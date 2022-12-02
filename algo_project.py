@@ -481,7 +481,7 @@ def visualize_code(int_list):
                     heapSort(draw_info, ascending)
             elif event.key == pygame.K_q and not sorting:
                 sorting_algorithm = QuickSort
-                sorting_algorithm_name = "Quick Sort" 
+                sorting_algorithm_name = "Quick Sort"
     pygame.quit()
 
         
