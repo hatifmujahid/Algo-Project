@@ -12,14 +12,9 @@ ws.geometry('600x600')
 def choose_option(i):
     global choice
     choice = i
-    print(choice)
-    adhar.destroy()
-    adharbtn.destroy()
-    adharbtn3.destroy()
-    adharbtn4.destroy()
     Label(ws, text='Choice selected successfully', foreground='green').grid(row=4, columnspan=3, pady=10)
+    time.sleep(2)
     ws.destroy()
-   
     
 adhar = Label(
     ws, 
