@@ -248,9 +248,11 @@ def main_code(float_list, int_list):
     print("merge sort done")
     time7 = insertionSort(int_list)
     print("insertion sort done")
+    time5 = bubbleSort(int_list)
+
 
     if max(int_list)>1 or min(int_list)<0:
-        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4,'mergeSort':time6 , 'insertionSort':time7 ,'Bucket Sort': 0}
+        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4,'Bubble sort': time5,'mergeSort':time6 , 'insertionSort':time7 ,'Bucket Sort': 0}
         sorting_algos = list(data.keys())
         values = list(data.values())
 

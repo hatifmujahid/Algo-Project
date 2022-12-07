@@ -11,9 +11,9 @@ def insertion_sort(arr, low, high):
             arr[j], arr[j - 1] = arr[j - 1], arr[j]
             j -= 1
         
-def partition(a, low, high): #lomuto partition scheme
-    i = low - 1 #directly to the left of our specified low-high range
-    pivot = a[high] #pivot is the last value in our range, the index equal to high parameter
+def partition(a, low, high): 
+    i = low - 1 
+    pivot = a[high] 
     for j in range(low, high):
         if a[j] <= pivot:
             i += 1
@@ -28,7 +28,7 @@ def quicksort_inplace(a, low=0, high=None):
 
     if low < high:
         if high - low + 1 < op:
-            # Size of the subarray is less than the threshold, insertion sort
+            
             insertion_sort(a, low, high)
             return
         # Size of the subarray is greater than the threshold, quicksort
@@ -36,19 +36,6 @@ def quicksort_inplace(a, low=0, high=None):
         quicksort_inplace(a, low, pivot_index - 1)
         quicksort_inplace(a, pivot_index + 1, high)
 def book_725(arr):
-    # print("threshold is 50000")
-    # start = time.time()
-    # op = 50000
-    # quicksort_inplace(arr)
-    # end = time.time()
-    # result2 = end-start
-
-    # print("threshold is 75000")
-    # start = time.time()
-    # op = 75000
-    # quicksort_inplace(arr)
-    # end = time.time()
-    # result3 = end-start
     print(len(arr), max(arr)-min(arr))
     print("Enter the threshold: ")
     op = int(input())
