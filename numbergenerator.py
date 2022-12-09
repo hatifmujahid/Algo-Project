@@ -6,10 +6,9 @@
 import random
 
 randomlist = []
-for i in range(0,100000):
+for i in range(0,20000):
     n = random.randint(1,100000)
     randomlist.append(n)
-print(randomlist)
 with open('smth.txt', 'w') as f:
     for line in randomlist:
         f.write("%s," % line)
