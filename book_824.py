@@ -1,5 +1,9 @@
 import time
-def book_824(arr, n,m):
+def book_824(arr):
+    print("Enter 1st number: ")
+    n = int(input())
+    print("Enter 2nd number: ")
+    m = int(input())
     start = time.time()
     max_element = int(max(arr))
     min_element = int(min(arr))

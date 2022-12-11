@@ -16,18 +16,7 @@ def main():
         choice = ui_choice()
         if choice ==1:
             visualize_code(int_list)
-            break
         elif choice==2:
             main_code(float_list, int_list)
-            break
-        elif choice==3:
-            book_725(int_list)
-            break
-        elif choice==4:
-            print("Enter 1st number: ")
-            n = int(input())
-            print("Enter 2nd number: ")
-            m = int(input())
-            book_824(int_list, n, m)
-            break        
+        choice = 0
 main()

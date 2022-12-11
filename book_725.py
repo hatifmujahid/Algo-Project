@@ -45,14 +45,4 @@ def book_725(arr):
     quicksort_inplace(arr)
     end = time.time()
     result4 = end-start
-
-    data = {'threshold is ':result4}
-    threshold = list(data.keys())
-    values = list(data.values())
-
-    fig,ax = plt.subplots()
-    ax.set_ylabel('Time in seconds')
-    ax.set_xlabel('Threshold')
-    ax.set_title('Graph of time against threshold')
-    plt.bar(threshold, values, color = 'blue', width = 0.4)
-    plt.show()
+    return result4

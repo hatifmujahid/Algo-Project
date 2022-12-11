@@ -224,47 +224,27 @@ def insertionSort(arr):
                 arr[j + 1] = arr[j]
                 j -= 1
         arr[j + 1] = key
+    
     end = time.time()
     return end-start
-def selectionSort(arr):
-    for i in range(len(A)):
-        min_idx = i
-        for j in range(i+1, len(A)):
-            if A[min_idx] > A[j]:
-                min_idx = j       
-    A[i], A[min_idx] = A[min_idx], A[i]
+
  
 def main_code(float_list, int_list):
       
     time1 = count_sort(int_list)
-    print("count sort done")
     time2 = radixSort(int_list)
-    print("radix sort done")
     time3 = quickSort(int_list)
-    print("quick sort done")
     time4 = heapSort(int_list)
-    print("heap sort done")
     time6 = mergeSort(int_list)
-    print("merge sort done")
     time7 = insertionSort(int_list)
-    print("insertion sort done")
     time5 = bubbleSort(int_list)
+    time8 = book_725(int_list)
+    time9 = book_824(int_list)
 
 
     if max(int_list)>1 or min(int_list)<0:
-        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4,'Bubble sort': time5,'mergeSort':time6 , 'insertionSort':time7 ,'Bucket Sort': 0}
-        sorting_algos = list(data.keys())
-        values = list(data.values())
-
-        fig,ax = plt.subplots()
-        ax.set_ylabel('Time in seconds')
-        ax.set_xlabel('Sorting algo names')
-        ax.set_title('Graph of time (Bucket sort is not possible with this array)')
-        plt.bar(sorting_algos, values, color = 'blue', width = 0.4)
-        plt.show()  
-    else:
-        time8 = bucketSort(float_list)
-        data = {'Counting Sort':time1, 'Radix Sort':time2, 'Bucket Sort':time8}
+        data = {'Counting Sort':time1, 'Radix Sort':time2, 'quickSort': time3,'heapSort':time4,'Bubble sort': time5,'mergeSort':time6 , 'insertionSort':time7, 'Book 7.25':time8, 'Book 8.24':time9}
+        print(data.values())
         sorting_algos = list(data.keys())
         values = list(data.values())
 
@@ -272,6 +252,5 @@ def main_code(float_list, int_list):
         ax.set_ylabel('Time in seconds')
         ax.set_xlabel('Sorting algo names')
         ax.set_title('Graph of time')
-        plt.bar(sorting_algos, values, color = 'blue', width = 0.4)
-        plt.show()
-    
+        plt.bar(sorting_algos, values, color = '#f7b705', width = 0.4)
+        plt.show()  

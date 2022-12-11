@@ -27,26 +27,15 @@ adharbtn = Button(
     text ='1. SORTING VISUALIZED(small file)', 
     command = lambda:choose_option(1)
     ) 
-adharbtn.grid(row=0, column=1)
+adharbtn.grid(row=10, column=1)
 
 adharbtn2 = Button(
     ws, 
     text ='2. N-TIME GRAPH OF ALGORITHMS(randoms file)', 
     command = lambda:choose_option(2)
     ) 
-adharbtn2.grid(row=1, column=1)
-adharbtn3= Button(
-    ws, 
-    text ='3. ALGORITHM 7.25 FROM BOOK(randoms file)', 
-    command = lambda:choose_option(3)
-    ) 
-adharbtn3.grid(row=2, column=1)
-adharbtn4 = Button(
-    ws, 
-    text ='4. ALGORITHM 8.24 FROM THE BOOK(randoms file)', 
-    command = lambda:choose_option(4)
-    ) 
-adharbtn4.grid(row=3, column=1)
+adharbtn2.grid(row=12, column=1)
+
 
 
 def ui_choice():

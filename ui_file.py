@@ -5,7 +5,7 @@ import time
 
 ws = Tk()
 ws.title('Array file input UI')
-ws.geometry('600x600') 
+ws.geometry('400x400') 
 
 
 def open_file():

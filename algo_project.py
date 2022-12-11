@@ -483,10 +483,9 @@ def visualize_code(int_list):
                 sorting_algorithm = QuickSort
                 sorting_algorithm_name = "Quick Sort"
     pygame.quit()
+    print(visualize_array)
+        
 
-        
-        
-        
 if __name__ == "__main__":
     main()
 
