@@ -27,7 +27,7 @@ def uploadFiles():
     for i in range(5):
         ws.update_idletasks()
         pb1['value'] += 20
-        time.sleep(1)
+        time.sleep(0.2)
     pb1.destroy()
     Label(ws, text='File Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
     ws.destroy()

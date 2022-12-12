@@ -230,7 +230,7 @@ def insertionSort(arr):
 
  
 def main_code(float_list, int_list):
-      
+    
     time1 = count_sort(int_list)
     time2 = radixSort(int_list)
     time3 = quickSort(int_list)
@@ -238,7 +238,10 @@ def main_code(float_list, int_list):
     time6 = mergeSort(int_list)
     time7 = insertionSort(int_list)
     time5 = bubbleSort(int_list)
-    time8 = book_725(int_list)
+    if(len(int_list)<5000):
+        time8 = book_725(int_list)
+    else:
+        time8 = 0
     time9 = book_824(int_list)
 
 
@@ -251,6 +254,7 @@ def main_code(float_list, int_list):
         fig,ax = plt.subplots()
         ax.set_ylabel('Time in seconds')
         ax.set_xlabel('Sorting algo names')
+        
         ax.set_title('Graph of time')
         plt.bar(sorting_algos, values, color = '#f7b705', width = 0.4)
         plt.show()  

@@ -3,6 +3,7 @@ import time
 import matplotlib.pyplot as plt 
 import numpy as np
 global op
+import math
 op = 5000
 def insertion_sort(arr, low, high):
     for i in range(low + 1, high + 1):
@@ -36,7 +37,7 @@ def quicksort_inplace(a, low=0, high=None):
         quicksort_inplace(a, low, pivot_index - 1)
         quicksort_inplace(a, pivot_index + 1, high)
 def book_725(arr):
-    print(len(arr), max(arr)-min(arr))
+    print((arr[0]+arr[math.floor(len(arr)/2)]+arr[len(arr)-1])/3)
     print("Enter the threshold: ")
     op = int(input())
     prompt = "threshold is"

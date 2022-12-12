@@ -10,7 +10,6 @@ def main():
         float_list.append(float(score_list[i][0:]))
     for i in range(len(score_list)):
         int_list.append(int(score_list[i][0:]))
-    print("CHOOSE YOUR OPTION \n1. SORTING VISUALIZED \n2. N-TIME GRAPH OF ALGORITHMS\n3. ALGORITHM 7.25 FROM BOOK\n4. ALGORITHM 8.24 FROM THE BOOK")
     choice = 10
     while choice!=0:
         choice = ui_choice()
